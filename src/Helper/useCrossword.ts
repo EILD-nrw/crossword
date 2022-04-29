@@ -10,11 +10,12 @@ const MAX_WORD_ATTEMPTS = 100
 const MAX_PUZZLE_ATTEMPTS = 20
 
 /**
- * Checks if a word fits a given position using 4 rules:
+ * Checks if a word fits a given position using the following rules:
  *    1. The word has to start within bounds
  *    2. The word has to end within bounds
  *    3. The word cant start or end directly in front of another word
  *    4. Any overlaps of different words have to be the same character
+ *    5. Non-overlap characters must not be (orthoganally) adjacent to other words
  * @param word the given word
  * @param cells the current puzzle
  * @param x starting column of the word
@@ -32,11 +33,11 @@ function wordFitsPosition(
   // Check if word starts within bounds
   if (x < 0 || y < 0) return false
 
-  // Check for sufficient space
+  // Check if word ends within bounds
   if (isHorizontal) {
-    if (word.length > cells[0].length - x) return false
+    if (x + word.length > cells[0].length) return false
   } else {
-    if (word.length > cells.length - y) return false
+    if (y + word.length > cells.length) return false
   }
 
   // Check if word can begin and end correctly
@@ -45,32 +46,63 @@ function wordFitsPosition(
     if (x - 1 > 0 && cells[y][x - 1] !== '#') return false
 
     // End
-    if (
-      x + word.length + 1 < cells[0].length &&
-      cells[y][x + word.length + 1] !== '#'
-    )
+    if (x + word.length < cells[0].length && cells[y][x + word.length] !== '#')
       return false
   } else {
     // Beginning
     if (y - 1 > 0 && cells[y - 1][x] !== '#') return false
 
     // End
-    if (
-      y + word.length + 1 < cells.length &&
-      cells[y + word.length + 1][x] !== '#'
-    )
+    if (y + word.length < cells.length && cells[y + word.length][x] !== '#')
       return false
   }
 
-  // Check for bad overlaps
+  const overlaps: { x: number; y: number }[] = []
+
+  // Check for overlaps
   for (let i = 0; i < word.length; i++) {
     const currentChar = word.charAt(i)
     if (isHorizontal) {
-      if (currentChar === cells[y][x + i] || cells[y][x + i] !== '#')
-        return false
+      if (cells[y][x + i] !== '#') {
+        // Some overlap
+        if (currentChar !== cells[y][x + i]) {
+          // Invalid overlap -> Word cant be placed
+          return false
+        }
+
+        // Acceptable overlap -> record it
+        overlaps.push({ x: x + i, y: y })
+      }
     } else {
-      if (currentChar !== cells[y + i][x] || cells[y + i][x] !== '#')
+      if (cells[y + i][x] !== '#') {
+        // Some overlap
+        if (currentChar !== cells[y + i][x]) {
+          // Invalid overlap -> Word cant be placed
+          return false
+        }
+
+        // Acceptable overlap -> record it
+        overlaps.push({ x: x, y: y + i })
+      }
+    }
+  }
+
+  // Check adjacent space for word collisions
+  for (let i = 0; i < word.length; i++) {
+    if (isHorizontal) {
+      if (
+        (cells[y - 1][x + i] !== '#' || cells[y + 1][x + i] !== '#') && // Adjacent cell is not empty
+        !overlaps.some((overlap) => overlap.x === x + i) // No overlap that would allow adjacent characters
+      ) {
         return false
+      }
+    } else {
+      if (
+        (cells[y + i][x - 1] !== '#' || cells[y + i][x + 1] !== '#') && // Adjacent cell is not empty
+        !overlaps.some((overlap) => overlap.y === y + i) // No overlap that would allow adjacent characters
+      ) {
+        return false
+      }
     }
   }
 
@@ -99,7 +131,7 @@ function getPositionForWord(
             wordFitsPosition(word, cells, colIndex - charIndex, rowIndex, true)
           ) {
             return {
-              x: colIndex,
+              x: colIndex - charIndex,
               y: rowIndex,
               isHorizontal: true,
             }
@@ -111,7 +143,7 @@ function getPositionForWord(
           ) {
             return {
               x: colIndex,
-              y: rowIndex,
+              y: rowIndex - charIndex,
               isHorizontal: false,
             }
           }
@@ -309,3 +341,11 @@ export default function useCrossword(clueCount: number, topicId: number) {
 }
 
 console.dir(generatePuzzle(10, 1))
+
+// const cells = [
+//   ['#', '#', '#'],
+//   ['a', 'n', 'd'],
+//   ['#', '#', '#'],
+// ]
+
+// console.log(wordFitsPosition('and', cells, 0, 1, false))
