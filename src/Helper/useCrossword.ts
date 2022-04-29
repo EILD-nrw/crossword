@@ -197,6 +197,9 @@ function addRandomCluesToCells(
   successful: boolean
   result: CrosswordPuzzle | null
 } {
+  // Base Case / Completed generation
+  if (amountToAdd === 0) return { successful: true, result: { cells, clues } }
+
   let newCells: string[][]
   let newClues: CrosswordClues[]
 
