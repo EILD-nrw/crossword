@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CrosswordClues } from '../Types/CrosswordHint'
 import { CrosswordPuzzle } from '../Types/CrosswordPuzzle'
 import { CrosswordTask } from '../Types/CrosswordTask'
@@ -332,6 +332,8 @@ export default function useCrossword(clueCount: number, topicId: number) {
     setCells(newCells)
     setClues(newClues)
   }
+
+  useEffect(() => refreshPuzzle(), [])
 
   return {
     cells,
