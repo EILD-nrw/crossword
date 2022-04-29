@@ -134,7 +134,7 @@ function getPositionForWord(
  * @param y the starting row of the word
  * @returns a new copy of the cells with the word written at the correct position
  */
-export function addWordToCells(
+function addWordToCells(
   cells: string[][],
   word: string,
   isHorizontal: boolean,
@@ -156,7 +156,7 @@ export function addWordToCells(
   return newCells
 }
 
-export function addRandomCluesToCells(
+function addRandomCluesToCells(
   cells: string[][],
   clues: CrosswordClues[],
   amountToAdd: number,
@@ -249,7 +249,7 @@ export function addRandomCluesToCells(
  * @param topicId Topic of the clues to be added into the puzzle
  * @returns the generated puzzle
  */
-export function generatePuzzle(
+function generatePuzzle(
   amountOfClues: number,
   topicId: number
 ): CrosswordPuzzle {
