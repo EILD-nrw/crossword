@@ -341,13 +341,3 @@ export default function useCrossword(clueCount: number, topicId: number) {
     refreshPuzzle,
   }
 }
-
-console.dir(generatePuzzle(10, 1))
-
-// const cells = [
-//   ['#', '#', '#'],
-//   ['a', 'n', 'd'],
-//   ['#', '#', '#'],
-// ]
-
-// console.log(wordFitsPosition('and', cells, 0, 1, false))
