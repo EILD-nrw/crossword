@@ -5,9 +5,8 @@ import { CrosswordTask } from '../Types/CrosswordTask'
 import { tasks } from './PuzzleData'
 
 // Params
-const SIZE_MULTIPLIER = 1.3
-const MAX_WORD_ATTEMPTS = 100
-const MAX_PUZZLE_ATTEMPTS = 20
+const SIZE_MULTIPLIER = 1.0
+const MAX_WORD_ATTEMPTS = 10
 
 /**
  * Checks if a word fits a given position using the following rules:
