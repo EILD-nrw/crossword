@@ -99,7 +99,8 @@ function wordFitsPosition(
       }
     } else {
       if (
-        ((x - 1 >= 0 && cells[y + i][x - 1] !== '#') || (x + 1 < cells[0].length && cells[y + i][x + 1] !== '#')) && // Adjacent cell is not empty
+        ((x - 1 >= 0 && cells[y + i][x - 1] !== '#') ||
+          (x + 1 < cells[0].length && cells[y + i][x + 1] !== '#')) && // Adjacent cell is not empty
         !overlaps.some((overlap) => overlap.y === y + i) // No overlap that would allow adjacent characters
       ) {
         return false
@@ -208,7 +209,14 @@ function addRandomCluesToCells(
   if (clues.length === 0) {
     // Take task from pool and add it to cells
     const [chosenTask, ...remainingTaskPool] = taskPool
-    newCells = addWordToCells(cells, chosenTask.word, true, 0, 0)
+
+    const xOffset = Math.floor(
+      Math.random() * (cells[0].length - chosenTask.word.length + 1)
+    )
+
+    const yOffset = Math.floor(Math.random() * cells.length)
+
+    newCells = addWordToCells(cells, chosenTask.word, true, xOffset, yOffset)
 
     // Prepare clue and add it to clues list
     const newClue = {
