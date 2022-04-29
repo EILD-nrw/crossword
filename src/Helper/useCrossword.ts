@@ -91,14 +91,15 @@ function wordFitsPosition(
   for (let i = 0; i < word.length; i++) {
     if (isHorizontal) {
       if (
-        (cells[y - 1][x + i] !== '#' || cells[y + 1][x + i] !== '#') && // Adjacent cell is not empty
+        ((y - 1 >= 0 && cells[y - 1][x + i] !== '#') ||
+          (y + 1 < cells.length && cells[y + 1][x + i] !== '#')) && // Adjacent cell is not empty
         !overlaps.some((overlap) => overlap.x === x + i) // No overlap that would allow adjacent characters
       ) {
         return false
       }
     } else {
       if (
-        (cells[y + i][x - 1] !== '#' || cells[y + i][x + 1] !== '#') && // Adjacent cell is not empty
+        ((x - 1 >= 0 && cells[y + i][x - 1] !== '#') || (x + 1 < cells[0].length && cells[y + i][x + 1] !== '#')) && // Adjacent cell is not empty
         !overlaps.some((overlap) => overlap.y === y + i) // No overlap that would allow adjacent characters
       ) {
         return false
