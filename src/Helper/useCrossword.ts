@@ -321,23 +321,20 @@ function generatePuzzle(
  * @returns
  */
 export default function useCrossword(clueCount: number, topicId: number) {
-  const [cells, setCells] = useState<string[][]>()
-  const [clues, setClues] = useState<CrosswordClues[]>()
+  const [puzzle, setPuzzle] = useState<CrosswordPuzzle>()
 
   function refreshPuzzle() {
     const { cells: newCells, clues: newClues } = generatePuzzle(
       clueCount,
       topicId
     )
-    setCells(newCells)
-    setClues(newClues)
+    setPuzzle({ cells: newCells, clues: newClues })
   }
 
   useEffect(() => refreshPuzzle(), [])
 
   return {
-    cells,
-    clues,
+    puzzle,
     refreshPuzzle,
   }
 }
