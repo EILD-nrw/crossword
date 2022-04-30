@@ -194,12 +194,9 @@ function addRandomCluesToCells(
   clues: CrosswordClues[],
   amountToAdd: number,
   taskPool: CrosswordTask[]
-): {
-  successful: boolean
-  result: CrosswordPuzzle | null
-} {
+): CrosswordPuzzle | null {
   // Base Case / Completed generation
-  if (amountToAdd === 0) return { successful: true, result: { cells, clues } }
+  if (amountToAdd === 0) return { cells, clues }
 
   let newCells: string[][]
   let newClues: CrosswordClues[]
@@ -262,15 +259,14 @@ function addRandomCluesToCells(
       }
       const newClues = [...clues, newClue]
 
-      const { successful, result } = addRandomCluesToCells(
+      const puzzle = addRandomCluesToCells(
         newCells,
         newClues,
         amountToAdd - 1,
         remainingTaskPool
       )
 
-      // If the chosen task led to a successful puzzle generation return the puzzle
-      if (successful) return { successful, result }
+      if (puzzle) return puzzle
     }
 
     // Add task back to the end of the pool and loop again if
@@ -280,10 +276,7 @@ function addRandomCluesToCells(
   }
 
   // Ran out of attempts
-  return {
-    successful: false,
-    result: null,
-  }
+  return null
 }
 
 /**
@@ -295,7 +288,7 @@ function addRandomCluesToCells(
 function generatePuzzle(
   amountOfClues: number,
   topicId: number
-): CrosswordPuzzle {
+): CrosswordPuzzle | null {
   const puzzleSize = Math.floor(amountOfClues * SIZE_MULTIPLIER)
   const taskPool = tasks
     .filter((task) => task.topic === topicId)
@@ -309,20 +302,12 @@ function generatePuzzle(
   const initialCluesList: CrosswordClues[] = []
 
   // Initiate recursive addition of cells
-  const { successful, result } = addRandomCluesToCells(
+  return addRandomCluesToCells(
     initialPuzzleCells,
     initialCluesList,
     amountOfClues,
     taskPool
   )
-
-  if (!successful) throw Error('Failed to create a puzzle')
-  else {
-    return {
-      cells: result!.cells,
-      clues: result!.clues,
-    }
-  }
 }
 
 /**
@@ -332,14 +317,10 @@ function generatePuzzle(
  * @returns
  */
 export default function useCrossword(clueCount: number, topicId: number) {
-  const [puzzle, setPuzzle] = useState<CrosswordPuzzle>()
+  const [puzzle, setPuzzle] = useState<CrosswordPuzzle | null>()
 
   function refreshPuzzle() {
-    const { cells: newCells, clues: newClues } = generatePuzzle(
-      clueCount,
-      topicId
-    )
-    setPuzzle({ cells: newCells, clues: newClues })
+    setPuzzle(generatePuzzle(clueCount, topicId))
   }
 
   useEffect(() => refreshPuzzle(), [])
