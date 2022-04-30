@@ -5,7 +5,7 @@ import { Header } from './Components/Header'
 import useCrossword from './Helper/useCrossword'
 
 function App() {
-  const { puzzle, refreshPuzzle } = useCrossword(10, 1)
+  const { puzzle, refreshPuzzle } = useCrossword(15, 1)
 
   return (
     <div className="max-w-screen-xl space-y-4 mx-auto my-0 flex flex-col justify-center">
