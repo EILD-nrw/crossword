@@ -36,8 +36,12 @@ function App() {
         Datenbank-Kreuzworträtsel
       </div>
       <div className="bg-white p-6">
-        <div className="flex space-x-4 justify-end">
+        <div className="flex space-x-4 justify-end items-center">
+          <label htmlFor="topicSelect" className="font-semibold">
+            Thema:
+          </label>
           <select
+            id="topicSelect"
             value={selectedTopic}
             onChange={handleTopicChange}
             className="border px-2 py-1.5 rounded-md font-semibold"
@@ -46,7 +50,11 @@ function App() {
               return <option value={topic.topicId}>{topic.text}</option>
             })}
           </select>
+          <label htmlFor="puzzleSizeSelect" className="font-semibold">
+            Puzzlegröße:
+          </label>
           <select
+            id="puzzleSizeSelect"
             value={selectedSize}
             onChange={handleSizeChange}
             className="border px-2 py-1.5 rounded-md font-semibold"
