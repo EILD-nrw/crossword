@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CrosswordPuzzle } from '../Types/CrosswordPuzzle'
 import { CrosswordCell } from './CrosswordCell'
 
@@ -17,6 +17,18 @@ export function PuzzleGridContainer({ puzzle, shouldShowSolution }: Props) {
   const [puzzleGrid, setPuzzleGrid] = useState<string[][]>(
     generateGridFromPuzzleCells(puzzle.cells)
   )
+
+  const cellRefs = useRef<HTMLInputElement[][]>(
+    Array(puzzleGrid.length)
+      .fill(0)
+      .map(() => [])
+  )
+
+  useEffect(() => {
+    cellRefs.current = Array(puzzleGrid.length)
+      .fill(0)
+      .map(() => [])
+  }, [puzzle])
 
   // Generate new empty grid once the puzzle changes
   useEffect(() => {
@@ -46,6 +58,7 @@ export function PuzzleGridContainer({ puzzle, shouldShowSolution }: Props) {
                     }
                     correctLetter={puzzle.cells[rowIndex][colIndex]}
                     shouldShowSolution={shouldShowSolution}
+                    ref={(ref) => ref && cellRefs.current[rowIndex].push(ref)}
                   />
                 ))}
               </tr>
