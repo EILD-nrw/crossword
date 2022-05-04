@@ -2,7 +2,10 @@ import { CrosswordPuzzle } from '../Types/CrosswordPuzzle'
 import { CrosswordCell } from './CrosswordCell'
 
 interface Props {
-  puzzle: CrosswordPuzzle | null | undefined
+// Clones the puzzle solution and replaces all letters with empty strings to be filled in by the user
+function generateGridFromPuzzleCells(puzzleCells: string[][]): string[][] {
+  const gridCopy: string[][] = JSON.parse(JSON.stringify(puzzleCells))
+  return gridCopy.map((line) => line.map((cell) => (cell !== '#' ? '' : '#')))
 }
 
 export function PuzzleGridContainer({ puzzle }: Props) {
@@ -12,14 +15,18 @@ export function PuzzleGridContainer({ puzzle }: Props) {
         Puzzle-Generierung fehlgeschlagen. Bitte versuchen Sie es erneut.
       </div>
     )
-  }
+
+  // Generate new empty grid once the puzzle changes
+  useEffect(() => {
+    setPuzzleGrid(generateGridFromPuzzleCells(puzzle.cells))
+  }, [puzzle])
 
   return (
     <>
       <div className="flex justify-center mt-4">
         <table>
           <tbody>
-            {puzzle?.cells.map((row, index) => {
+            {puzzleGrid?.map((row, index) => {
               return (
                 <tr key={index}>
                   {row.map((cell, index) => (
