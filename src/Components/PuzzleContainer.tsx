@@ -1,9 +1,9 @@
 import { ChangeEvent, useState } from 'react'
-import { CrosswordCell } from './Components/CrosswordCell'
-import { Footer } from './Components/Footer'
-import { Header } from './Components/Header'
-import { PuzzleGridContainer } from './Components/PuzzleGridContainer'
-import useCrossword from './Helper/useCrossword'
+import { CrosswordCell } from './CrosswordCell'
+import { Footer } from './Footer'
+import { Header } from './Header'
+import { PuzzleGridContainer } from './PuzzleGridContainer'
+import useCrossword from '../Helper/useCrossword'
 
 const sizeOptions = [
   { text: 'Klein', clueCount: 10 },
@@ -16,7 +16,7 @@ const topicOptions = [
   { text: 'PL/SQL', topicId: 2 },
 ]
 
-function App() {
+function PuzzleContainer() {
   const [selectedSize, setSelectedSize] = useState(15)
   const [selectedTopic, setSelectedTopic] = useState(1)
   const { puzzle, refreshPuzzle } = useCrossword(selectedSize, 1)
@@ -89,4 +89,4 @@ function App() {
   )
 }
 
-export default App
+export default PuzzleContainer
