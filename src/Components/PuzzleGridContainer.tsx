@@ -17,6 +17,8 @@ export function PuzzleGridContainer({ puzzle }: Props) {
     generateGridFromPuzzleCells(puzzle.cells)
   )
 
+  const [shouldShowSolution, setShouldShowSolution] = useState(false)
+
   // Generate new empty grid once the puzzle changes
   useEffect(() => {
     setPuzzleGrid(generateGridFromPuzzleCells(puzzle.cells))
@@ -43,6 +45,8 @@ export function PuzzleGridContainer({ puzzle }: Props) {
                     setLetter={(letter: string) =>
                       handleLetterInput(letter, colIndex, rowIndex)
                     }
+                    correctLetter={puzzle.cells[rowIndex][colIndex]}
+                    shouldShowSolution={shouldShowSolution}
                   />
                 ))}
               </tr>
@@ -52,7 +56,7 @@ export function PuzzleGridContainer({ puzzle }: Props) {
       </div>
       <div className="flex justify-end">
         <button
-          onClick={() => {}}
+          onClick={() => setShouldShowSolution(val => !val)}
           className="px-2 py-1.5 bg-th-red text-white font-semibold border rounded-md"
         >
           Überprüfen
