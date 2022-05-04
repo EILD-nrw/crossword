@@ -1,7 +1,11 @@
+import { useEffect, useState } from 'react'
 import { CrosswordPuzzle } from '../Types/CrosswordPuzzle'
 import { CrosswordCell } from './CrosswordCell'
 
 interface Props {
+  puzzle: CrosswordPuzzle
+}
+
 // Clones the puzzle solution and replaces all letters with empty strings to be filled in by the user
 function generateGridFromPuzzleCells(puzzleCells: string[][]): string[][] {
   const gridCopy: string[][] = JSON.parse(JSON.stringify(puzzleCells))
@@ -9,12 +13,9 @@ function generateGridFromPuzzleCells(puzzleCells: string[][]): string[][] {
 }
 
 export function PuzzleGridContainer({ puzzle }: Props) {
-  if (!puzzle) {
-    return (
-      <div className="bg-th-red p-6">
-        Puzzle-Generierung fehlgeschlagen. Bitte versuchen Sie es erneut.
-      </div>
-    )
+  const [puzzleGrid, setPuzzleGrid] = useState<string[][]>(
+    generateGridFromPuzzleCells(puzzle.cells)
+  )
 
   // Generate new empty grid once the puzzle changes
   useEffect(() => {

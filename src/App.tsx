@@ -82,7 +82,7 @@ function App() {
             Neues Puzzle
           </button>
         </div>
-        <PuzzleGridContainer puzzle={puzzle} />
+        {puzzle && <PuzzleGridContainer puzzle={puzzle} />}
       </div>
       <Footer />
     </div>
