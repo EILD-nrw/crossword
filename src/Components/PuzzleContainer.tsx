@@ -19,6 +19,7 @@ const topicOptions = [
 function PuzzleContainer() {
   const [selectedSize, setSelectedSize] = useState(15)
   const [selectedTopic, setSelectedTopic] = useState(1)
+  const [shouldShowSolution, setShouldShowSolution] = useState(false)
   const { puzzle, refreshPuzzle } = useCrossword(selectedSize, 1)
 
   function handleSizeChange(e: ChangeEvent<HTMLSelectElement>) {
@@ -82,7 +83,20 @@ function PuzzleContainer() {
             Neues Puzzle
           </button>
         </div>
-        {puzzle && <PuzzleGridContainer puzzle={puzzle} />}
+        {puzzle && (
+          <PuzzleGridContainer
+            puzzle={puzzle}
+            shouldShowSolution={shouldShowSolution}
+          />
+        )}
+        <div className="flex justify-end">
+          <button
+            onClick={() => setShouldShowSolution((val) => !val)}
+            className="px-2 py-1.5 bg-th-red text-white font-semibold border rounded-md"
+          >
+            Überprüfen
+          </button>
+        </div>
       </div>
       <Footer />
     </div>

@@ -4,6 +4,7 @@ import { CrosswordCell } from './CrosswordCell'
 
 interface Props {
   puzzle: CrosswordPuzzle
+  shouldShowSolution: boolean
 }
 
 // Clones the puzzle solution and replaces all letters with empty strings to be filled in by the user
@@ -12,12 +13,10 @@ function generateGridFromPuzzleCells(puzzleCells: string[][]): string[][] {
   return gridCopy.map((line) => line.map((cell) => (cell !== '#' ? '' : '#')))
 }
 
-export function PuzzleGridContainer({ puzzle }: Props) {
+export function PuzzleGridContainer({ puzzle, shouldShowSolution }: Props) {
   const [puzzleGrid, setPuzzleGrid] = useState<string[][]>(
     generateGridFromPuzzleCells(puzzle.cells)
   )
-
-  const [shouldShowSolution, setShouldShowSolution] = useState(false)
 
   // Generate new empty grid once the puzzle changes
   useEffect(() => {
@@ -53,14 +52,6 @@ export function PuzzleGridContainer({ puzzle }: Props) {
             ))}
           </tbody>
         </table>
-      </div>
-      <div className="flex justify-end">
-        <button
-          onClick={() => setShouldShowSolution(val => !val)}
-          className="px-2 py-1.5 bg-th-red text-white font-semibold border rounded-md"
-        >
-          Überprüfen
-        </button>
       </div>
     </>
   )
