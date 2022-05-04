@@ -74,17 +74,7 @@ function App() {
             Neues Puzzle
           </button>
         </div>
-        <div className="flex justify-center mt-4">
-          <PuzzleGridContainer puzzle={puzzle} />
-        </div>
-        <div className="flex justify-end">
-          <button
-            onClick={() => {}}
-            className="px-2 py-1.5 bg-th-red text-white font-semibold border rounded-md"
-          >
-            Überprüfen
-          </button>
-        </div>
+        <PuzzleGridContainer puzzle={puzzle} />
       </div>
       <Footer />
     </div>
