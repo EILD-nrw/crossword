@@ -22,20 +22,31 @@ export function PuzzleGridContainer({ puzzle }: Props) {
     setPuzzleGrid(generateGridFromPuzzleCells(puzzle.cells))
   }, [puzzle])
 
+  function handleLetterInput(letter: string, x: number, y: number) {
+    const puzzleCopy = JSON.parse(JSON.stringify(puzzleGrid))
+    puzzleCopy[y][x] = letter
+
+    setPuzzleGrid(puzzleCopy)
+  }
+
   return (
     <>
       <div className="flex justify-center mt-4">
         <table>
           <tbody>
-            {puzzleGrid?.map((row, index) => {
-              return (
-                <tr key={index}>
-                  {row.map((cell, index) => (
-                    <CrosswordCell key={index} letter={cell} />
-                  ))}
-                </tr>
-              )
-            })}
+            {puzzleGrid?.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {row.map((cell, colIndex) => (
+                  <CrosswordCell
+                    key={colIndex}
+                    letter={cell}
+                    setLetter={(letter: string) =>
+                      handleLetterInput(letter, colIndex, rowIndex)
+                    }
+                  />
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
