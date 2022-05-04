@@ -47,8 +47,12 @@ function App() {
               onChange={handleTopicChange}
               className="border px-2 py-1.5 rounded-md font-semibold"
             >
-              {topicOptions.map((topic) => {
-                return <option value={topic.topicId}>{topic.text}</option>
+              {topicOptions.map((topic, index) => {
+                return (
+                  <option value={topic.topicId} key={index}>
+                    {topic.text}
+                  </option>
+                )
               })}
             </select>
           </div>
@@ -62,8 +66,12 @@ function App() {
               onChange={handleSizeChange}
               className="border px-2 py-1.5 rounded-md font-semibold"
             >
-              {sizeOptions.map((size) => {
-                return <option value={size.clueCount}>{size.text}</option>
+              {sizeOptions.map((size, index) => {
+                return (
+                  <option value={size.clueCount} key={index}>
+                    {size.text}
+                  </option>
+                )
               })}
             </select>
           </div>
