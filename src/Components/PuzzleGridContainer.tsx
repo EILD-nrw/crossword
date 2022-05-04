@@ -6,7 +6,14 @@ interface Props {
 }
 
 export function PuzzleGridContainer({ puzzle }: Props) {
-  return (
+  if (!puzzle) {
+    return (
+      <div className="bg-th-red p-6">
+        Puzzle-Generierung fehlgeschlagen. Bitte versuchen Sie es erneut.
+      </div>
+    )
+  }
+
   return (
     <>
       <div className="flex justify-center mt-4">

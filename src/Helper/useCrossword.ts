@@ -7,6 +7,7 @@ import { tasks } from './PuzzleData'
 // Params
 const SIZE_MULTIPLIER = 1.0
 const MAX_WORD_ATTEMPTS = 10
+const MAX_PUZZLE_ATTEMPTS = 5
 
 /**
  * Checks if a word fits a given position using the following rules:
@@ -301,13 +302,22 @@ function generatePuzzle(
     .map((_) => Array(puzzleSize).fill('#'))
   const initialCluesList: CrosswordClues[] = []
 
-  // Initiate recursive addition of cells
-  return addRandomCluesToCells(
-    initialPuzzleCells,
-    initialCluesList,
-    amountOfClues,
-    taskPool
-  )
+  // Puzzle generation can rarely fail and should be retried
+  for (let attempt = 0; attempt < MAX_PUZZLE_ATTEMPTS; attempt++) {
+    // Initiate recursive addition of cells
+    const puzzle = addRandomCluesToCells(
+      initialPuzzleCells,
+      initialCluesList,
+      amountOfClues,
+      taskPool
+    )
+
+    // Return successfully generated puzzle
+    if (puzzle) return puzzle
+  }
+
+  // Return null if puzzle generation failed too many times
+  return null
 }
 
 /**
