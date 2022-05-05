@@ -9,8 +9,8 @@ import { ConfigBar } from './ConfigBar'
 export function PuzzleContainer() {
   const [selectedSize, setSelectedSize] = useState(15)
   const [selectedTopic, setSelectedTopic] = useState(1)
+  const { puzzle, refreshPuzzle } = useCrossword(selectedSize, selectedTopic)
   const [shouldShowSolution, setShouldShowSolution] = useState(false)
-  const { puzzle, refreshPuzzle } = useCrossword(selectedSize, 1)
 
   return (
     <div className="max-w-screen-xl space-y-4 mx-auto my-0 flex flex-col justify-center">
