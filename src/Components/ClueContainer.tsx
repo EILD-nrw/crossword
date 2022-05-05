@@ -12,7 +12,7 @@ interface Props {
  * @param x - x coordinate of the position
  * @param y - y coordinate of the position
  * @param clues - list of clues
- * @returns horizontal and vertical clues 
+ * @returns horizontal and vertical clues
  */
 function getCluesAtPosition(x: number, y: number, clues: CrosswordClue[]) {
   const horizontal = clues
@@ -50,18 +50,26 @@ export function ClueContainer({ clues, focusPosition, showSolution }: Props) {
       <div className="h-24 mb-24">
         {currentClues.horizontal && (
           <>
-            <h3>→</h3>
+            <h3 className="text-3xl">🠖</h3>
             <p>{currentClues.horizontal.hint}</p>
-            {showSolution && <p>Lösung: {currentClues.horizontal.word}</p>}
+            {showSolution && (
+              <p>
+                <b>Lösung:</b> {currentClues.horizontal.word}
+              </p>
+            )}
           </>
         )}
       </div>
       <div className="h-24">
         {currentClues.vertical && (
           <>
-            <h3>↓</h3>
+            <h3 className="text-3xl">🠗</h3>
             <p>{currentClues.vertical.hint}</p>
-            {showSolution && <p>Lösung: {currentClues.vertical.word}</p>}
+            {showSolution && (
+              <p>
+                <b>Lösung:</b> {currentClues.vertical.word}
+              </p>
+            )}
           </>
         )}
       </div>

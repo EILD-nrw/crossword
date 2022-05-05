@@ -77,7 +77,7 @@ export function CrosswordCell({
   return (
     <td className="border border-black p-0">
       {letter === '#' ? (
-        <div className="w-8 h-8 bg-slate-400" />
+        <div className="w-8 h-8 bg-slate-900" />
       ) : (
         <input
           className={`w-8 h-8 flex justify-center items-center font-bold text-center ${
