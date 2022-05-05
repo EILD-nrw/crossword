@@ -218,8 +218,8 @@ function addRandomCluesToCells(
     const newClue = {
       word: chosenTask.word,
       hint: chosenTask.hint,
-      x: 0,
-      y: 0,
+      x: xOffset,
+      y: yOffset,
       isHorizontal: true,
     }
     newClues = [...clues, newClue]
