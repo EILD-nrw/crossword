@@ -30,6 +30,11 @@ export function PuzzleGridContainer({ puzzle, shouldShowSolution }: Props) {
       .map(() => [])
   }, [puzzle])
 
+  const [inFocusCellPos, setInFocusCellPos] = useState<{
+    x: number
+    y: number
+  }>()
+
   // Generate new empty grid once the puzzle changes
   useEffect(() => {
     setPuzzleGrid(generateGridFromPuzzleCells(puzzle.cells))
@@ -59,6 +64,9 @@ export function PuzzleGridContainer({ puzzle, shouldShowSolution }: Props) {
                     correctLetter={puzzle.cells[rowIndex][colIndex]}
                     shouldShowSolution={shouldShowSolution}
                     ref={(ref) => ref && cellRefs.current[rowIndex].push(ref)}
+                    onFocus={() =>
+                      setInFocusCellPos({ x: colIndex, y: rowIndex })
+                    }
                   />
                 ))}
               </tr>

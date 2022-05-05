@@ -5,10 +5,11 @@ interface Props {
   setLetter: (letter: string) => void
   correctLetter: string
   shouldShowSolution: boolean
+  onFocus: () => void
 }
 
 export const CrosswordCell = forwardRef<any, Props>(
-  ({ letter, setLetter, correctLetter, shouldShowSolution }, ref) => {
+  ({ letter, setLetter, correctLetter, shouldShowSolution, onFocus }, ref) => {
     function handleLetterInput(e: ChangeEvent<HTMLInputElement>) {
       setLetter(e.target.value.toUpperCase())
     }
@@ -31,6 +32,7 @@ export const CrosswordCell = forwardRef<any, Props>(
             value={letter}
             onChange={handleLetterInput}
             ref={ref}
+            onFocus={onFocus}
           ></input>
         )}
       </td>
