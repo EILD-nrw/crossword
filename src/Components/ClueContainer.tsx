@@ -4,6 +4,7 @@ import { CrosswordClue } from '../Types/CrosswordClue'
 interface Props {
   clues: CrosswordClue[]
   focusPosition: { x: number; y: number }
+  showSolution: boolean
 }
 
 function getCluesAtPosition(x: number, y: number, clues: CrosswordClue[]) {
@@ -19,15 +20,18 @@ function getCluesAtPosition(x: number, y: number, clues: CrosswordClue[]) {
     .find((clue) => y >= clue.y && y < clue.y + clue.word.length)
 
   return {
-    horizontal: horizontal?.word || '',
-    vertical: vertical?.word || '',
+    horizontal: horizontal || null,
+    vertical: vertical || null,
   }
 }
 
-export function ClueContainer({ clues, focusPosition }: Props) {
-  const [currentClues, setCurrentClues] = useState({
-    horizontal: '',
-    vertical: '',
+export function ClueContainer({ clues, focusPosition, showSolution }: Props) {
+  const [currentClues, setCurrentClues] = useState<{
+    horizontal: CrosswordClue | null
+    vertical: CrosswordClue | null
+  }>({
+    horizontal: null,
+    vertical: null,
   })
 
   useEffect(() => {
@@ -36,20 +40,22 @@ export function ClueContainer({ clues, focusPosition }: Props) {
   }, [focusPosition])
 
   return (
-    <div className="p-4 w-60">
-      <div className="h-6 mb-20">
+    <div className="p-4 w-[400px]">
+      <div className="h-24 mb-24">
         {currentClues.horizontal && (
           <>
             <h3>→</h3>
-            <p>{currentClues.horizontal}</p>
+            <p>{currentClues.horizontal.hint}</p>
+            {showSolution && <p>Lösung: {currentClues.horizontal.word}</p>}
           </>
         )}
       </div>
-      <div className="h-6">
+      <div className="h-24">
         {currentClues.vertical && (
           <>
             <h3>↓</h3>
-            <p>{currentClues.vertical}</p>
+            <p>{currentClues.vertical.hint}</p>
+            {showSolution && <p>Lösung: {currentClues.vertical.word}</p>}
           </>
         )}
       </div>
