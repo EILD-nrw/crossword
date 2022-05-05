@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import { CrosswordClues } from '../Types/CrosswordHint'
-import { CrosswordPuzzle } from '../Types/CrosswordPuzzle'
+import { CrosswordClue } from '../Types/CrosswordClue'
 import { CrosswordTask } from '../Types/CrosswordTask'
 import { tasks } from './PuzzleData'
 
@@ -192,15 +191,15 @@ function addWordToCells(
 
 function addRandomCluesToCells(
   cells: string[][],
-  clues: CrosswordClues[],
+  clues: CrosswordClue[],
   amountToAdd: number,
   taskPool: CrosswordTask[]
-): CrosswordPuzzle | null {
+): { cells: string[][]; clues: CrosswordClue[] } | null {
   // Base Case / Completed generation
   if (amountToAdd === 0) return { cells, clues }
 
   let newCells: string[][]
-  let newClues: CrosswordClues[]
+  let newClues: CrosswordClue[]
 
   // Empty puzzle
   if (clues.length === 0) {
@@ -289,7 +288,7 @@ function addRandomCluesToCells(
 function generatePuzzle(
   amountOfClues: number,
   topicId: number
-): CrosswordPuzzle | null {
+): { cells: string[][]; clues: CrosswordClue[] } | null {
   const puzzleSize = Math.floor(amountOfClues * SIZE_MULTIPLIER)
   const taskPool = tasks
     .filter((task) => task.topic === topicId)
@@ -300,7 +299,7 @@ function generatePuzzle(
   const initialPuzzleCells = Array(puzzleSize)
     .fill(0)
     .map((_) => Array(puzzleSize).fill('#'))
-  const initialCluesList: CrosswordClues[] = []
+  const initialCluesList: CrosswordClue[] = []
 
   // Puzzle generation can rarely fail and should be retried
   for (let attempt = 0; attempt < MAX_PUZZLE_ATTEMPTS; attempt++) {
@@ -320,6 +319,12 @@ function generatePuzzle(
   return null
 }
 
+// Clones the puzzle solution and replaces all letters with empty strings to be filled in by the user
+function generateGridFromPuzzleCells(puzzleCells: string[][]): string[][] {
+  const gridCopy: string[][] = JSON.parse(JSON.stringify(puzzleCells))
+  return gridCopy.map((line) => line.map((cell) => (cell !== '#' ? '' : '#')))
+}
+
 /**
  * Custom Hook to handle crossword generation logic
  * @param clueCount Number of clues to be added to the puzzle
@@ -327,16 +332,27 @@ function generatePuzzle(
  * @returns
  */
 export default function useCrossword(clueCount: number, topicId: number) {
-  const [puzzle, setPuzzle] = useState<CrosswordPuzzle | null>()
+  const [solutionGrid, setSolutionGrid] = useState<string[][] | null>()
+  const [clues, setClues] = useState<CrosswordClue[]>()
+  const [puzzleGrid, setPuzzleGrid] = useState<string[][] | null>()
 
   function refreshPuzzle() {
-    setPuzzle(generatePuzzle(clueCount, topicId))
+    const newPuzzle = generatePuzzle(clueCount, topicId)
+
+    if (!newPuzzle) return
+
+    setSolutionGrid(newPuzzle.cells)
+    setClues(newPuzzle.clues)
+    setPuzzleGrid(generateGridFromPuzzleCells(newPuzzle.cells))
   }
 
   useEffect(() => refreshPuzzle(), [])
 
   return {
-    puzzle,
+    solutionGrid,
+    clues,
+    puzzleGrid,
+    setPuzzleGrid,
     refreshPuzzle,
   }
 }

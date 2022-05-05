@@ -9,7 +9,8 @@ import { ConfigBar } from './ConfigBar'
 export function PuzzleContainer() {
   const [selectedSize, setSelectedSize] = useState(15)
   const [selectedTopic, setSelectedTopic] = useState(1)
-  const { puzzle, refreshPuzzle } = useCrossword(selectedSize, selectedTopic)
+  const { solutionGrid, clues, puzzleGrid, setPuzzleGrid, refreshPuzzle } =
+    useCrossword(selectedSize, selectedTopic)
   const [shouldShowSolution, setShouldShowSolution] = useState(false)
 
   return (
@@ -26,9 +27,12 @@ export function PuzzleContainer() {
           setSelectedTopic={setSelectedTopic}
           refreshPuzzle={refreshPuzzle}
         />
-        {puzzle && (
+        {solutionGrid && puzzleGrid && clues && (
           <PuzzleGridContainer
-            puzzle={puzzle}
+            solutionCells={solutionGrid}
+            clues={clues}
+            puzzleGrid={puzzleGrid}
+            setPuzzleGrid={setPuzzleGrid}
             shouldShowSolution={shouldShowSolution}
           />
         )}

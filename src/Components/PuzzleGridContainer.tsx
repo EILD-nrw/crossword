@@ -1,32 +1,20 @@
 import { KeyboardEvent, useEffect, useRef, useState } from 'react'
-import { CrosswordPuzzle } from '../Types/CrosswordPuzzle'
+import { CrosswordClue } from '../Types/CrosswordClue'
 import { CrosswordCell } from './CrosswordCell'
 
 interface Props {
-  puzzle: CrosswordPuzzle
+  solutionCells: string[][]
+  clues: CrosswordClue[]
+  puzzleGrid: string[][]
+  setPuzzleGrid: (newGrid: string[][]) => void
   shouldShowSolution: boolean
 }
 
-// Clones the puzzle solution and replaces all letters with empty strings to be filled in by the user
-function generateGridFromPuzzleCells(puzzleCells: string[][]): string[][] {
-  const gridCopy: string[][] = JSON.parse(JSON.stringify(puzzleCells))
-  return gridCopy.map((line) => line.map((cell) => (cell !== '#' ? '' : '#')))
-}
-
-export function PuzzleGridContainer({ puzzle, shouldShowSolution }: Props) {
-  const [puzzleGrid, setPuzzleGrid] = useState<string[][]>(
-    generateGridFromPuzzleCells(puzzle.cells)
-  )
-
-  const [inFocusCellPos, setInFocusCellPos] = useState<{
+export function PuzzleGridContainer({ solutionCells, clues, puzzleGrid, setPuzzleGrid, shouldShowSolution }: Props) {
+const [inFocusCellPos, setInFocusCellPos] = useState<{
     x: number
     y: number
   }>({ x: -1, y: -1 })
-
-  // Generate new empty grid once the puzzle changes
-  useEffect(() => {
-    setPuzzleGrid(generateGridFromPuzzleCells(puzzle.cells))
-  }, [puzzle])
 
   function handleLetterInput(letter: string, x: number, y: number) {
     const puzzleCopy = JSON.parse(JSON.stringify(puzzleGrid))
@@ -110,7 +98,7 @@ export function PuzzleGridContainer({ puzzle, shouldShowSolution }: Props) {
                     setLetter={(letter: string) =>
                       handleLetterInput(letter, colIndex, rowIndex)
                     }
-                    correctLetter={puzzle.cells[rowIndex][colIndex]}
+                    correctLetter={solutionCells[rowIndex][colIndex]}
                     shouldShowSolution={shouldShowSolution}
                     onFocus={() =>
                       setInFocusCellPos({ x: colIndex, y: rowIndex })

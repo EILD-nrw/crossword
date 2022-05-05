@@ -1,4 +1,4 @@
-export interface CrosswordClues {
+export interface CrosswordClue {
   hint: string
   word: string
   x: number
