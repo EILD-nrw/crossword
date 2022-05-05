@@ -18,18 +18,6 @@ export function PuzzleGridContainer({ puzzle, shouldShowSolution }: Props) {
     generateGridFromPuzzleCells(puzzle.cells)
   )
 
-  const cellRefs = useRef<HTMLInputElement[][]>(
-    Array(puzzleGrid.length)
-      .fill(0)
-      .map(() => [])
-  )
-
-  useEffect(() => {
-    cellRefs.current = Array(puzzleGrid.length)
-      .fill(0)
-      .map(() => [])
-  }, [puzzle])
-
   const [inFocusCellPos, setInFocusCellPos] = useState<{
     x: number
     y: number
@@ -81,7 +69,6 @@ export function PuzzleGridContainer({ puzzle, shouldShowSolution }: Props) {
                     }
                     correctLetter={puzzle.cells[rowIndex][colIndex]}
                     shouldShowSolution={shouldShowSolution}
-                    ref={(ref) => ref && cellRefs.current[rowIndex].push(ref)}
                     onFocus={() =>
                       setInFocusCellPos({ x: colIndex, y: rowIndex })
                     }
