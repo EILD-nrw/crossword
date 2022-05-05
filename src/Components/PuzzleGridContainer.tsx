@@ -35,21 +35,64 @@ export function PuzzleGridContainer({ puzzle, shouldShowSolution }: Props) {
     setPuzzleGrid(puzzleCopy)
   }
 
-  function handleNavigation(key: 'Enter' | 'Tab' | ' ') {
-    if (key === 'Enter') {
-      if (puzzleGrid[inFocusCellPos.y + 1][inFocusCellPos.x] === '#') return
+  function handleNavigation(direction: 'up' | 'down' | 'left' | 'right') {
+    switch (direction) {
+      case 'up': {
+        if (
+          inFocusCellPos.y - 1 < 0 ||
+          puzzleGrid[inFocusCellPos.y - 1][inFocusCellPos.x] === '#'
+        ) {
+          return
+        }
 
-      setInFocusCellPos({
-        x: inFocusCellPos.x,
-        y: inFocusCellPos.y + 1,
-      })
-    } else {
-      if (puzzleGrid[inFocusCellPos.y][inFocusCellPos.x + 1] === '#') return
+        setInFocusCellPos({
+          x: inFocusCellPos.x,
+          y: inFocusCellPos.y - 1,
+        })
+        break
+      }
+      case 'down': {
+        if (
+          inFocusCellPos.y + 1 > puzzleGrid.length ||
+          puzzleGrid[inFocusCellPos.y + 1][inFocusCellPos.x] === '#'
+        ) {
+          return
+        }
 
-      setInFocusCellPos({
-        x: inFocusCellPos.x + 1,
-        y: inFocusCellPos.y,
-      })
+        setInFocusCellPos({
+          x: inFocusCellPos.x,
+          y: inFocusCellPos.y + 1,
+        })
+        break
+      }
+      case 'left': {
+        if (
+          inFocusCellPos.x - 1 < 0 ||
+          puzzleGrid[inFocusCellPos.y][inFocusCellPos.x - 1] === '#'
+        ) {
+          return
+        }
+
+        setInFocusCellPos({
+          x: inFocusCellPos.x - 1,
+          y: inFocusCellPos.y,
+        })
+        break
+      }
+      case 'right': {
+        if (
+          inFocusCellPos.x > puzzleGrid[0].length ||
+          puzzleGrid[inFocusCellPos.y][inFocusCellPos.x + 1] === '#'
+        ) {
+          return
+        }
+
+        setInFocusCellPos({
+          x: inFocusCellPos.x + 1,
+          y: inFocusCellPos.y,
+        })
+        break
+      }
     }
   }
 

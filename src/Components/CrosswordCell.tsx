@@ -13,7 +13,7 @@ interface Props {
   shouldShowSolution: boolean
   onFocus: () => void
   inFocus: boolean
-  navigationHandler: (key: 'Enter' | 'Tab' | ' ') => void
+  navigationHandler: (direction: 'up' | 'down' | 'left' | 'right') => void
 }
 
 export function CrosswordCell({
@@ -38,9 +38,32 @@ export function CrosswordCell({
   }, [inFocus])
 
   function checkForNavigationKey(e: KeyboardEvent) {
-    if (e.key !== 'Enter' && e.key !== 'Tab' && e.key !== ' ') return
+    if (
+      !['Enter', 'Tab', ' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']
+    ) {
+      return
+    } 
     e.preventDefault()
-    navigationHandler(e.key)
+
+    switch (e.key) {
+      case 'ArrowUp':
+        navigationHandler('up')
+        break
+      case 'ArrowDown':
+      case 'Enter':
+        navigationHandler('down')
+        break
+      case 'ArrowLeft':
+        navigationHandler('left')
+        break
+      case 'ArrowRight':
+      case 'Tab':
+      case ' ': 
+       navigationHandler('right')
+       break
+      default:
+        return
+    }
   }
 
   return (
