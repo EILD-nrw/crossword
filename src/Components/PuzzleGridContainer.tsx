@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { KeyboardEvent, useEffect, useRef, useState } from 'react'
 import { CrosswordPuzzle } from '../Types/CrosswordPuzzle'
 import { CrosswordCell } from './CrosswordCell'
 
@@ -33,7 +33,7 @@ export function PuzzleGridContainer({ puzzle, shouldShowSolution }: Props) {
   const [inFocusCellPos, setInFocusCellPos] = useState<{
     x: number
     y: number
-  }>()
+  }>({ x: -1, y: -1 })
 
   // Generate new empty grid once the puzzle changes
   useEffect(() => {
@@ -45,6 +45,24 @@ export function PuzzleGridContainer({ puzzle, shouldShowSolution }: Props) {
     puzzleCopy[y][x] = letter
 
     setPuzzleGrid(puzzleCopy)
+  }
+
+  function handleNavigation(key: 'Enter' | 'Tab' | ' ') {
+    if (key === 'Enter') {
+      if (puzzleGrid[inFocusCellPos.y + 1][inFocusCellPos.x] === '#') return
+
+      setInFocusCellPos({
+        x: inFocusCellPos.x,
+        y: inFocusCellPos.y + 1,
+      })
+    } else {
+      if (puzzleGrid[inFocusCellPos.y][inFocusCellPos.x + 1] === '#') return
+
+      setInFocusCellPos({
+        x: inFocusCellPos.x + 1,
+        y: inFocusCellPos.y,
+      })
+    }
   }
 
   return (
@@ -67,6 +85,11 @@ export function PuzzleGridContainer({ puzzle, shouldShowSolution }: Props) {
                     onFocus={() =>
                       setInFocusCellPos({ x: colIndex, y: rowIndex })
                     }
+                    inFocus={
+                      inFocusCellPos?.x === colIndex &&
+                      inFocusCellPos.y === rowIndex
+                    }
+                    navigationHandler={handleNavigation}
                   />
                 ))}
               </tr>

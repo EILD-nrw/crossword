@@ -1,4 +1,10 @@
-import { ChangeEvent, forwardRef } from 'react'
+import {
+  ChangeEvent,
+  forwardRef,
+  KeyboardEvent,
+  useEffect,
+  useRef,
+} from 'react'
 
 interface Props {
   letter: string
@@ -6,12 +12,39 @@ interface Props {
   correctLetter: string
   shouldShowSolution: boolean
   onFocus: () => void
+  inFocus: boolean
+  navigationHandler: (key: 'Enter' | 'Tab' | ' ') => void
 }
 
 export const CrosswordCell = forwardRef<any, Props>(
-  ({ letter, setLetter, correctLetter, shouldShowSolution, onFocus }, ref) => {
+  (
+    {
+      letter,
+      setLetter,
+      correctLetter,
+      shouldShowSolution,
+      onFocus,
+      inFocus,
+      navigationHandler,
+    },
+    ref
+  ) => {
     function handleLetterInput(e: ChangeEvent<HTMLInputElement>) {
       setLetter(e.target.value.toUpperCase())
+    }
+
+    const inputRef = useRef<HTMLInputElement>(null)
+
+    useEffect(() => {
+      if (!inFocus) return
+
+      inputRef.current?.focus()
+    }, [inFocus])
+
+    function checkForNavigationKey(e: KeyboardEvent) {
+      if (e.key !== 'Enter' && e.key !== 'Tab' && e.key !== ' ') return
+      e.preventDefault()
+      navigationHandler(e.key)
     }
 
     return (
@@ -31,8 +64,9 @@ export const CrosswordCell = forwardRef<any, Props>(
             maxLength={1}
             value={letter}
             onChange={handleLetterInput}
-            ref={ref}
+            ref={inputRef}
             onFocus={onFocus}
+            onKeyDown={checkForNavigationKey}
           ></input>
         )}
       </td>
