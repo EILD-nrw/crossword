@@ -5,6 +5,7 @@ import { Header } from './Header'
 import { PuzzleGridContainer } from './PuzzleGridContainer'
 import useCrossword from '../Helper/useCrossword'
 import { ConfigBar } from './ConfigBar'
+import { ClueContainer } from './ClueContainer'
 
 export function PuzzleContainer() {
   const [selectedSize, setSelectedSize] = useState(15)
@@ -12,6 +13,10 @@ export function PuzzleContainer() {
   const { solutionGrid, clues, puzzleGrid, setPuzzleGrid, refreshPuzzle } =
     useCrossword(selectedSize, selectedTopic)
   const [shouldShowSolution, setShouldShowSolution] = useState(false)
+  const [inFocusCellPos, setInFocusCellPos] = useState<{
+    x: number
+    y: number
+  }>({ x: -1, y: -1 })
 
   return (
     <div className="max-w-screen-xl space-y-4 mx-auto my-0 flex flex-col justify-center">
@@ -27,15 +32,19 @@ export function PuzzleContainer() {
           setSelectedTopic={setSelectedTopic}
           refreshPuzzle={refreshPuzzle}
         />
-        {solutionGrid && puzzleGrid && clues && (
-          <PuzzleGridContainer
-            solutionCells={solutionGrid}
-            clues={clues}
-            puzzleGrid={puzzleGrid}
-            setPuzzleGrid={setPuzzleGrid}
-            shouldShowSolution={shouldShowSolution}
-          />
-        )}
+        <div className="flex justify-center items-center">
+          {solutionGrid && puzzleGrid && clues && (
+            <PuzzleGridContainer
+              solutionCells={solutionGrid}
+              puzzleGrid={puzzleGrid}
+              setPuzzleGrid={setPuzzleGrid}
+              inFocusCellPos={inFocusCellPos}
+              setInFocusCellPos={setInFocusCellPos}
+              shouldShowSolution={shouldShowSolution}
+            />
+          )}
+          {clues && <ClueContainer clues={clues} focusPosition={inFocusCellPos} />}
+        </div>
         <div className="flex justify-end">
           <button
             onClick={() => setShouldShowSolution((val) => !val)}

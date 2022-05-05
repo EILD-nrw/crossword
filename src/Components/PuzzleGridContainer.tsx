@@ -1,21 +1,22 @@
-import { KeyboardEvent, useEffect, useRef, useState } from 'react'
-import { CrosswordClue } from '../Types/CrosswordClue'
 import { CrosswordCell } from './CrosswordCell'
 
 interface Props {
   solutionCells: string[][]
-  clues: CrosswordClue[]
   puzzleGrid: string[][]
   setPuzzleGrid: (newGrid: string[][]) => void
+  inFocusCellPos: { x: number; y: number }
+  setInFocusCellPos: (newPos: { x: number; y: number }) => void
   shouldShowSolution: boolean
 }
 
-export function PuzzleGridContainer({ solutionCells, clues, puzzleGrid, setPuzzleGrid, shouldShowSolution }: Props) {
-const [inFocusCellPos, setInFocusCellPos] = useState<{
-    x: number
-    y: number
-  }>({ x: -1, y: -1 })
-
+export function PuzzleGridContainer({
+  solutionCells,
+  puzzleGrid,
+  setPuzzleGrid,
+  inFocusCellPos,
+  setInFocusCellPos,
+  shouldShowSolution,
+}: Props) {
   function handleLetterInput(letter: string, x: number, y: number) {
     const puzzleCopy = JSON.parse(JSON.stringify(puzzleGrid))
     puzzleCopy[y][x] = letter
