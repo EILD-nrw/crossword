@@ -7,8 +7,14 @@ interface Props {
   showSolution: boolean
 }
 
+/**
+ * Attempts to find all clues for words at a given position
+ * @param x - x coordinate of the position
+ * @param y - y coordinate of the position
+ * @param clues - list of clues
+ * @returns horizontal and vertical clues 
+ */
 function getCluesAtPosition(x: number, y: number, clues: CrosswordClue[]) {
-  // Horizontal
   const horizontal = clues
     .filter((clue) => clue.isHorizontal)
     .filter((clue) => clue.y === y)

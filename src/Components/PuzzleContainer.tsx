@@ -49,7 +49,11 @@ export function PuzzleContainer() {
             />
           )}
           {clues && (
-            <ClueContainer clues={clues} focusPosition={inFocusCellPos} showSolution={shouldShowSolution} />
+            <ClueContainer
+              clues={clues}
+              focusPosition={inFocusCellPos}
+              showSolution={shouldShowSolution}
+            />
           )}
         </div>
         <div className="flex justify-end">
