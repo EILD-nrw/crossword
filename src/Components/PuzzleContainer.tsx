@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { CrosswordCell } from './CrosswordCell'
 import { Footer } from './Footer'
 import { Header } from './Header'
@@ -17,6 +17,11 @@ export function PuzzleContainer() {
     x: number
     y: number
   }>({ x: -1, y: -1 })
+
+  useEffect(() => {
+    setShouldShowSolution(false)
+    setInFocusCellPos({ x: -1, y: -1 })
+  }, [solutionGrid])
 
   return (
     <div className="max-w-screen-xl space-y-4 mx-auto my-0 flex flex-col justify-center">
@@ -43,11 +48,13 @@ export function PuzzleContainer() {
               shouldShowSolution={shouldShowSolution}
             />
           )}
-          {clues && <ClueContainer clues={clues} focusPosition={inFocusCellPos} />}
+          {clues && (
+            <ClueContainer clues={clues} focusPosition={inFocusCellPos} />
+          )}
         </div>
         <div className="flex justify-end">
           <button
-            onClick={() => setShouldShowSolution((val) => !val)}
+            onClick={() => setShouldShowSolution(true)}
             className="px-2 py-1.5 bg-th-red text-white font-semibold border rounded-md"
           >
             Überprüfen
