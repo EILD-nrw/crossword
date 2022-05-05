@@ -42,14 +42,14 @@ function wordFitsPosition(
   // Check if word can begin and end correctly
   if (isHorizontal) {
     // Beginning
-    if (x - 1 > 0 && cells[y][x - 1] !== '#') return false
+    if (x - 1 >= 0 && cells[y][x - 1] !== '#') return false
 
     // End
     if (x + word.length < cells[0].length && cells[y][x + word.length] !== '#')
       return false
   } else {
     // Beginning
-    if (y - 1 > 0 && cells[y - 1][x] !== '#') return false
+    if (y - 1 >= 0 && cells[y - 1][x] !== '#') return false
 
     // End
     if (y + word.length < cells.length && cells[y + word.length][x] !== '#')
