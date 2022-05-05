@@ -88,7 +88,7 @@ export function PuzzleGridContainer({
   return (
     <>
       <div className="flex justify-center mt-4">
-        <table>
+        <table className="border-2 border-slate-900">
           <tbody>
             {puzzleGrid?.map((row, rowIndex) => (
               <tr key={rowIndex}>
