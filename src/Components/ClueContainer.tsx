@@ -36,19 +36,23 @@ export function ClueContainer({ clues, focusPosition }: Props) {
   }, [focusPosition])
 
   return (
-    <div className="p-4">
-      {currentClues.horizontal && (
-        <div>
-          <h3>→</h3>
-          <p>{currentClues.horizontal}</p>
-        </div>
-      )}
-      {currentClues.vertical && (
-        <div>
-          <h3>↓</h3>
-          <p>{currentClues.vertical}</p>
-        </div>
-      )}
+    <div className="p-4 w-60">
+      <div className="h-6 mb-20">
+        {currentClues.horizontal && (
+          <>
+            <h3>→</h3>
+            <p>{currentClues.horizontal}</p>
+          </>
+        )}
+      </div>
+      <div className="h-6">
+        {currentClues.vertical && (
+          <>
+            <h3>↓</h3>
+            <p>{currentClues.vertical}</p>
+          </>
+        )}
+      </div>
     </div>
   )
 }
