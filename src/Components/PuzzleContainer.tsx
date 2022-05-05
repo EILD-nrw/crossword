@@ -6,7 +6,7 @@ import { PuzzleGridContainer } from './PuzzleGridContainer'
 import useCrossword from '../Helper/useCrossword'
 import { ConfigBar } from './ConfigBar'
 
-function PuzzleContainer() {
+export function PuzzleContainer() {
   const [selectedSize, setSelectedSize] = useState(15)
   const [selectedTopic, setSelectedTopic] = useState(1)
   const [shouldShowSolution, setShouldShowSolution] = useState(false)
@@ -45,5 +45,3 @@ function PuzzleContainer() {
     </div>
   )
 }
-
-export default PuzzleContainer
