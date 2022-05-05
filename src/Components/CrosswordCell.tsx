@@ -39,10 +39,18 @@ export function CrosswordCell({
 
   function checkForNavigationKey(e: KeyboardEvent) {
     if (
-      !['Enter', 'Tab', ' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']
+      ![
+        'Enter',
+        'Tab',
+        ' ',
+        'ArrowUp',
+        'ArrowDown',
+        'ArrowLeft',
+        'ArrowRight',
+      ].some((key) => key === e.key)
     ) {
       return
-    } 
+    }
     e.preventDefault()
 
     switch (e.key) {
@@ -58,9 +66,9 @@ export function CrosswordCell({
         break
       case 'ArrowRight':
       case 'Tab':
-      case ' ': 
-       navigationHandler('right')
-       break
+      case ' ':
+        navigationHandler('right')
+        break
       default:
         return
     }
