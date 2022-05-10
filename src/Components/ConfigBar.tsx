@@ -1,14 +1,10 @@
 import { ChangeEvent } from 'react'
+import { topics } from '../Helper/Topics'
 
 const sizeOptions = [
   { text: 'Klein', clueCount: 10 },
   { text: 'Mittel', clueCount: 15 },
   { text: 'Groß', clueCount: 20 }
-]
-
-const topicOptions = [
-  { text: 'SQL-Allgemein', topicId: 1 },
-  { text: 'PL/SQL', topicId: 2 }
 ]
 
 interface Props {
@@ -46,7 +42,7 @@ export function ConfigBar ({
           onChange={handleTopicChange}
           className="border px-2 py-1.5 rounded-md font-semibold"
         >
-          {topicOptions.map((topic, index) => {
+          {topics.map((topic, index) => {
             return (
               <option value={topic.topicId} key={index}>
                 {topic.text}
