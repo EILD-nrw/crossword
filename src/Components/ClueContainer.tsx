@@ -14,7 +14,7 @@ interface Props {
  * @param clues - list of clues
  * @returns horizontal and vertical clues
  */
-function getCluesAtPosition(x: number, y: number, clues: CrosswordClue[]) {
+function getCluesAtPosition (x: number, y: number, clues: CrosswordClue[]) {
   const horizontal = clues
     .filter((clue) => clue.isHorizontal)
     .filter((clue) => clue.y === y)
@@ -27,17 +27,17 @@ function getCluesAtPosition(x: number, y: number, clues: CrosswordClue[]) {
 
   return {
     horizontal: horizontal || null,
-    vertical: vertical || null,
+    vertical: vertical || null
   }
 }
 
-export function ClueContainer({ clues, focusPosition, showSolution }: Props) {
+export function ClueContainer ({ clues, focusPosition, showSolution }: Props) {
   const [currentClues, setCurrentClues] = useState<{
     horizontal: CrosswordClue | null
     vertical: CrosswordClue | null
   }>({
     horizontal: null,
-    vertical: null,
+    vertical: null
   })
 
   useEffect(() => {
