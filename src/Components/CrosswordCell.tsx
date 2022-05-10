@@ -1,9 +1,8 @@
 import {
   ChangeEvent,
-  forwardRef,
   KeyboardEvent,
   useEffect,
-  useRef,
+  useRef
 } from 'react'
 
 interface Props {
@@ -16,16 +15,16 @@ interface Props {
   navigationHandler: (direction: 'up' | 'down' | 'left' | 'right') => void
 }
 
-export function CrosswordCell({
+export function CrosswordCell ({
   letter,
   setLetter,
   correctLetter,
   shouldShowSolution,
   onFocus,
   inFocus,
-  navigationHandler,
+  navigationHandler
 }: Props) {
-  function handleLetterInput(e: ChangeEvent<HTMLInputElement>) {
+  function handleLetterInput (e: ChangeEvent<HTMLInputElement>) {
     setLetter(e.target.value.toUpperCase())
   }
 
@@ -37,7 +36,7 @@ export function CrosswordCell({
     inputRef.current?.focus()
   }, [inFocus])
 
-  function checkForNavigationKey(e: KeyboardEvent) {
+  function checkForNavigationKey (e: KeyboardEvent) {
     if (
       ![
         'Enter',
@@ -46,7 +45,7 @@ export function CrosswordCell({
         'ArrowUp',
         'ArrowDown',
         'ArrowLeft',
-        'ArrowRight',
+        'ArrowRight'
       ].some((key) => key === e.key)
     ) {
       return
@@ -70,15 +69,16 @@ export function CrosswordCell({
         navigationHandler('right')
         break
       default:
-        return
     }
   }
 
   return (
     <td className="border border-black p-0">
-      {letter === '#' ? (
+      {letter === '#'
+        ? (
         <div className="w-8 h-8 bg-slate-900" />
-      ) : (
+          )
+        : (
         <input
           className={`w-8 h-8 flex justify-center items-center font-bold text-center ${
             shouldShowSolution
@@ -95,7 +95,7 @@ export function CrosswordCell({
           onFocus={onFocus}
           onKeyDown={checkForNavigationKey}
         ></input>
-      )}
+          )}
     </td>
   )
 }

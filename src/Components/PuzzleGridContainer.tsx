@@ -9,22 +9,22 @@ interface Props {
   shouldShowSolution: boolean
 }
 
-export function PuzzleGridContainer({
+export function PuzzleGridContainer ({
   solutionCells,
   puzzleGrid,
   setPuzzleGrid,
   inFocusCellPos,
   setInFocusCellPos,
-  shouldShowSolution,
+  shouldShowSolution
 }: Props) {
-  function handleLetterInput(letter: string, x: number, y: number) {
+  function handleLetterInput (letter: string, x: number, y: number) {
     const puzzleCopy = JSON.parse(JSON.stringify(puzzleGrid))
     puzzleCopy[y][x] = letter
 
     setPuzzleGrid(puzzleCopy)
   }
 
-  function handleNavigation(direction: 'up' | 'down' | 'left' | 'right') {
+  function handleNavigation (direction: 'up' | 'down' | 'left' | 'right') {
     switch (direction) {
       case 'up': {
         if (
@@ -36,7 +36,7 @@ export function PuzzleGridContainer({
 
         setInFocusCellPos({
           x: inFocusCellPos.x,
-          y: inFocusCellPos.y - 1,
+          y: inFocusCellPos.y - 1
         })
         break
       }
@@ -50,7 +50,7 @@ export function PuzzleGridContainer({
 
         setInFocusCellPos({
           x: inFocusCellPos.x,
-          y: inFocusCellPos.y + 1,
+          y: inFocusCellPos.y + 1
         })
         break
       }
@@ -64,7 +64,7 @@ export function PuzzleGridContainer({
 
         setInFocusCellPos({
           x: inFocusCellPos.x - 1,
-          y: inFocusCellPos.y,
+          y: inFocusCellPos.y
         })
         break
       }
@@ -78,7 +78,7 @@ export function PuzzleGridContainer({
 
         setInFocusCellPos({
           x: inFocusCellPos.x + 1,
-          y: inFocusCellPos.y,
+          y: inFocusCellPos.y
         })
         break
       }

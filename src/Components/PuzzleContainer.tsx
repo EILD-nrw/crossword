@@ -1,5 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react'
-import { CrosswordCell } from './CrosswordCell'
+import { useEffect, useState } from 'react'
 import { Footer } from './Footer'
 import { Header } from './Header'
 import { PuzzleGridContainer } from './PuzzleGridContainer'
@@ -7,7 +6,7 @@ import useCrossword from '../Helper/useCrossword'
 import { ConfigBar } from './ConfigBar'
 import { ClueContainer } from './ClueContainer'
 
-export function PuzzleContainer() {
+export function PuzzleContainer () {
   const [selectedSize, setSelectedSize] = useState(15)
   const [selectedTopic, setSelectedTopic] = useState(1)
   const { solutionGrid, clues, puzzleGrid, setPuzzleGrid, refreshPuzzle } =

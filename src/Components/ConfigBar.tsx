@@ -3,12 +3,12 @@ import { ChangeEvent } from 'react'
 const sizeOptions = [
   { text: 'Klein', clueCount: 10 },
   { text: 'Mittel', clueCount: 15 },
-  { text: 'Groß', clueCount: 20 },
+  { text: 'Groß', clueCount: 20 }
 ]
 
 const topicOptions = [
   { text: 'SQL-Allgemein', topicId: 1 },
-  { text: 'PL/SQL', topicId: 2 },
+  { text: 'PL/SQL', topicId: 2 }
 ]
 
 interface Props {
@@ -19,18 +19,18 @@ interface Props {
   refreshPuzzle: () => void
 }
 
-export function ConfigBar({
+export function ConfigBar ({
   selectedTopic,
   setSelectedTopic,
   selectedSize,
   setSelectedSize,
-  refreshPuzzle,
+  refreshPuzzle
 }: Props) {
-  function handleSizeChange(e: ChangeEvent<HTMLSelectElement>) {
+  function handleSizeChange (e: ChangeEvent<HTMLSelectElement>) {
     setSelectedSize(Number(e.target.value))
   }
 
-  function handleTopicChange(e: ChangeEvent<HTMLSelectElement>) {
+  function handleTopicChange (e: ChangeEvent<HTMLSelectElement>) {
     setSelectedTopic(Number(e.target.value))
   }
 

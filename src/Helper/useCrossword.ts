@@ -22,7 +22,7 @@ const MAX_PUZZLE_ATTEMPTS = 5
  * @param isHorizontal whether the word is placed horizontal
  * @returns if the word fits the position
  */
-function wordFitsPosition(
+function wordFitsPosition (
   word: string,
   cells: string[][],
   x: number,
@@ -45,15 +45,13 @@ function wordFitsPosition(
     if (x - 1 >= 0 && cells[y][x - 1] !== '#') return false
 
     // End
-    if (x + word.length < cells[0].length && cells[y][x + word.length] !== '#')
-      return false
+    if (x + word.length < cells[0].length && cells[y][x + word.length] !== '#') return false
   } else {
     // Beginning
     if (y - 1 >= 0 && cells[y - 1][x] !== '#') return false
 
     // End
-    if (y + word.length < cells.length && cells[y + word.length][x] !== '#')
-      return false
+    if (y + word.length < cells.length && cells[y + word.length][x] !== '#') return false
   }
 
   const overlaps: { x: number; y: number }[] = []
@@ -70,7 +68,7 @@ function wordFitsPosition(
         }
 
         // Acceptable overlap -> record it
-        overlaps.push({ x: x + i, y: y })
+        overlaps.push({ x: x + i, y })
       }
     } else {
       if (cells[y + i][x] !== '#') {
@@ -81,7 +79,7 @@ function wordFitsPosition(
         }
 
         // Acceptable overlap -> record it
-        overlaps.push({ x: x, y: y + i })
+        overlaps.push({ x, y: y + i })
       }
     }
   }
@@ -117,7 +115,7 @@ function wordFitsPosition(
  * @param cells
  * @returns a position if one is found or null otherwise
  */
-function getPositionForWord(
+function getPositionForWord (
   word: string,
   cells: string[][]
 ): { x: number; y: number; isHorizontal: boolean } | null {
@@ -134,7 +132,7 @@ function getPositionForWord(
             return {
               x: colIndex - charIndex,
               y: rowIndex,
-              isHorizontal: true,
+              isHorizontal: true
             }
           }
 
@@ -145,7 +143,7 @@ function getPositionForWord(
             return {
               x: colIndex,
               y: rowIndex - charIndex,
-              isHorizontal: false,
+              isHorizontal: false
             }
           }
         }
@@ -167,7 +165,7 @@ function getPositionForWord(
  * @param y the starting row of the word
  * @returns a new copy of the cells with the word written at the correct position
  */
-function addWordToCells(
+function addWordToCells (
   cells: string[][],
   word: string,
   isHorizontal: boolean,
@@ -189,7 +187,7 @@ function addWordToCells(
   return newCells
 }
 
-function addRandomCluesToCells(
+function addRandomCluesToCells (
   cells: string[][],
   clues: CrosswordClue[],
   amountToAdd: number,
@@ -220,7 +218,7 @@ function addRandomCluesToCells(
       hint: chosenTask.hint,
       x: xOffset,
       y: yOffset,
-      isHorizontal: true,
+      isHorizontal: true
     }
     newClues = [...clues, newClue]
 
@@ -255,7 +253,7 @@ function addRandomCluesToCells(
         hint: chosenTask.hint,
         x: position.x,
         y: position.y,
-        isHorizontal: position.isHorizontal,
+        isHorizontal: position.isHorizontal
       }
       const newClues = [...clues, newClue]
 
@@ -285,7 +283,7 @@ function addRandomCluesToCells(
  * @param topicId Topic of the clues to be added into the puzzle
  * @returns the generated puzzle
  */
-function generatePuzzle(
+function generatePuzzle (
   amountOfClues: number,
   topicId: number
 ): { cells: string[][]; clues: CrosswordClue[] } | null {
@@ -320,7 +318,7 @@ function generatePuzzle(
 }
 
 // Clones the puzzle solution and replaces all letters with empty strings to be filled in by the user
-function generateGridFromPuzzleCells(puzzleCells: string[][]): string[][] {
+function generateGridFromPuzzleCells (puzzleCells: string[][]): string[][] {
   const gridCopy: string[][] = JSON.parse(JSON.stringify(puzzleCells))
   return gridCopy.map((line) => line.map((cell) => (cell !== '#' ? '' : '#')))
 }
@@ -331,12 +329,12 @@ function generateGridFromPuzzleCells(puzzleCells: string[][]): string[][] {
  * @param topicId ID of the chosen topic
  * @returns
  */
-export default function useCrossword(clueCount: number, topicId: number) {
+export default function useCrossword (clueCount: number, topicId: number) {
   const [solutionGrid, setSolutionGrid] = useState<string[][] | null>()
   const [clues, setClues] = useState<CrosswordClue[]>()
   const [puzzleGrid, setPuzzleGrid] = useState<string[][] | null>()
 
-  function refreshPuzzle() {
+  function refreshPuzzle () {
     const newPuzzle = generatePuzzle(clueCount, topicId)
 
     if (!newPuzzle) return
@@ -353,6 +351,6 @@ export default function useCrossword(clueCount: number, topicId: number) {
     clues,
     puzzleGrid,
     setPuzzleGrid,
-    refreshPuzzle,
+    refreshPuzzle
   }
 }
