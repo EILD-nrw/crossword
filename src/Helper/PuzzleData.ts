@@ -332,6 +332,11 @@ export const tasks: CrosswordTask[] = [
     topic: 2
   },
   {
+    word: 'disjunkt',
+    hint: 'Subtypen haben keine gemeinsamen Elemente',
+    topic: 2
+  },
+  {
     word: 'generalisierung',
     hint: 'Prozess aus aehnlichen Subtypen einen Supertyp zu gewinnen',
     topic: 2
@@ -679,6 +684,131 @@ export const tasks: CrosswordTask[] = [
   {
     word: 'unaerer',
     hint: 'In der RA ist die Projektion ein ... Operator',
+    topic: 1
+  },
+  {
+    word: 'primärschlüssel',
+    hint: 'Identifiziert einen Entität',
+    topic: 1
+  },
+  {
+    word: 'generalisierung',
+    hint: 'Prozess der Gewinnung eines Supertyps aus mehreren ähnlichen Subtypen',
+    topic: 1
+  },
+  {
+    word: 'spezialisierung',
+    hint: 'Prozess der Gewinnung von Subtypen aus einem gegebenen Supertyp',
+    topic: 1
+  },
+  {
+    word: 'parser',
+    hint: 'Prüft SQL Anweisungen',
+    topic: 1
+  },
+  {
+    word: 'codd',
+    hint: 'Erfinder der Relationentheorie',
+    topic: 1
+  },
+  {
+    word: 'rekursiv',
+    hint: 'Beziehung einer Entity-Menge auf sich selbst',
+    topic: 1
+  },
+  {
+    word: 'commit',
+    hint: 'Schließt eine Transaktion ab',
+    topic: 1
+  },
+  {
+    word: 'unique',
+    hint: 'SQL-Constraint für einzigartige Felder',
+    topic: 1
+  },
+  {
+    word: 'null',
+    hint: 'SQL-Constraint für leere Felder',
+    topic: 1
+  },
+  {
+    word: 'optimistisch',
+    hint: 'Sperrverfahren für wenig schreibende Zugriffe',
+    topic: 1
+  },
+  {
+    word: 'pessimistisch',
+    hint: 'Sperrverfahren für viele schreibende Zugriffe',
+    topic: 1
+  },
+  {
+    word: 'deadlock',
+    hint: 'Datenbankverklemmung',
+    topic: 1
+  },
+  {
+    word: 'NATURALJOIN',
+    hint: 'Operator simulierbar durch kartesisches Produkt Selektion und Projektion (zusammen geschrieben)',
+    topic: 1
+  },
+  {
+    word: 'VERLUSTFREI',
+    hint: 'Alle Tupel der Ausgangsrelationen nehmen am Verbund teil',
+    topic: 1
+  },
+  {
+    word: 'DURCHSCHNITT',
+    hint: 'Mengenoperator mit einer analogen Semantik wie der Natural/Theta Join',
+    topic: 1
+  },
+  {
+    word: 'RIGHT',
+    hint: 'Outer Join-Typ',
+    topic: 1
+  },
+  {
+    word: 'LEFT',
+    hint: 'Outer Join-Typ',
+    topic: 1
+  },
+  {
+    word: 'SELECT',
+    hint: 'Der Projektion entsprechende Klausel der SQL-Anfrage',
+    topic: 1
+  },
+  {
+    word: 'WHERE',
+    hint: 'Der Selection entsprechende Klausel der SQL-Anfrage',
+    topic: 1
+  },
+  {
+    word: 'ATTRIBUTE',
+    hint: 'Spalten sind ...',
+    topic: 1
+  },
+  {
+    word: 'FROM',
+    hint: 'Dem kartesischen Produkt entsprechende Klausel der SQL-Anfrage',
+    topic: 1
+  },
+  {
+    word: 'THETAJOIN',
+    hint: 'Join-Operator mit beliebiger selbst zu formulierender Bedingung (zusammen geschrieben)',
+    topic: 1
+  },
+  {
+    word: 'UNÄREN',
+    hint: 'Projektion und Selektion sind die beiden einzigen _____ Operatoren',
+    topic: 1
+  },
+  {
+    word: 'DIFFERENZ',
+    hint: 'Einziger nicht kommutativer Mengenoperator',
+    topic: 1
+  },
+  {
+    word: 'ATOMAR',
+    hint: 'Eigenschaft der Attribute in der 1. NF',
     topic: 1
   }
 ]
