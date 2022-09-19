@@ -5,6 +5,7 @@ import { PuzzleGridContainer } from './PuzzleGridContainer'
 import useCrossword from '../Helper/useCrossword'
 import { ConfigBar } from './ConfigBar'
 import { ClueContainer } from './ClueContainer'
+import SponsorBar from './SponsorBar'
 
 export function PuzzleContainer () {
   const [selectedSize, setSelectedSize] = useState(15)
@@ -25,9 +26,6 @@ export function PuzzleContainer () {
   return (
     <div className="max-w-screen-xl space-y-4 mx-auto my-0 flex flex-col justify-center">
       <Header />
-      <div className="bg-white p-4 text-4xl font-semibold font-mono cursor-default">
-        Datenbank-Kreuzworträtsel
-      </div>
       <div className="bg-white p-6">
         <ConfigBar
           selectedSize={selectedSize}
@@ -64,6 +62,7 @@ export function PuzzleContainer () {
           </button>
         </div>
       </div>
+      <SponsorBar />
       <Footer />
     </div>
   )
