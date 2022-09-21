@@ -6,7 +6,7 @@ export default function SponsorBar () {
       <div className="flex-auto">
         <a href="https://www.dh.nrw/" rel="noreferrer" target="_blank">
           <img
-            className="md:px-20 max-w-full float-right"
+            className="md:px-20 max-w-full"
             src={sponsorLogo}
             alt="Sponsor Image"
           />
